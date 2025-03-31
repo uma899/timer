@@ -1,11 +1,39 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: var(--bg);
   min-height: 100vh;
   margin: 0;
+  transition: 500ms;
+
 }
 
-.timer{
+.main{
+  /* border: 1px solid red; */
+  height: 90vh;
+}
+
+.white{
+  --bg: #f8f8f8;
+  --colour: #000000;
+  --btn-bg: rgb(121, 121, 121);
+  --timer-bg: #a1a1a1;
+}
+
+.dark{
+  --bg: #282c34;
+  --colour: #ffffff;
+  --btn-bg: rgb(206, 206, 206);
+  --timer-bg: #5b5d61;
+}
+
+
+.screen {
+  transition: 300ms;
+  /* border: 1px solid red; */
+  position: relative;
+}
+
+.timer {
   padding: 50px;
   color: white;
   display: flex;
@@ -13,12 +41,13 @@
   flex-direction: column;
   /* border: 1px solid blue; */
   gap: 50px;
+  
 }
 
-.counter{
+.counter {
   height: 300px;
   width: 300px;
-  background-color: #5b5d61;
+  background-color: var(--timer-bg);
   border-radius: 40px;
   display: flex;
   align-items: center;
@@ -28,7 +57,7 @@
   /* border: 1px solid red; */
 }
 
-input{
+input {
   margin-left: 10px;
   border: none;
   border-radius: 10px;
@@ -49,20 +78,19 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-input:focus{
+input:focus {
   outline: none;
 }
 
-.actions{
+.actions {
   display: flex;
   gap: 40px;
   align-items: center;
   justify-content: center;
   /* border: 1px solid red; */
 }
-.btn{
-  background: none;
-  border: none;
+
+.btn {
   background-color: rgb(85, 0, 255);
   height: 40px;
   width: 100px;
@@ -74,12 +102,17 @@ input:focus{
   transition: 200ms;
 }
 
-.btn:active{
+button {
+  background: none;
+  border: none;
+}
+
+.btn:active {
   background-color: rgb(67, 0, 202);
 }
 
 
-.time_container{
+.time_container {
   /* border: 10px solid rgb(85, 0, 255); */
   height: 150px;
   width: 150px;
@@ -89,30 +122,66 @@ input:focus{
   z-index: 1;
 }
 
-.time{
+.time {
   border-radius: 100%;
   background-color: #282c34;
   height: 140px;
   width: 140px;
   display: grid;
   place-content: center;
-  
+
 }
 
-/* .time_container::after{
-  content: '';
-  transition: 100ms;
+button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.stopwatch {
+  padding: 50px;
+  color: var(--colour);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* border: 1px solid blue; */
+  gap: 50px;
+}
+
+
+.set_screen {
+  width: 100vw;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 100%;
-  width: 100%;
-  border-radius: 100%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  /* background-color: rgb(85, 0, 255); */
-/*   background-image: conic-gradient(
-    rgb(85, 0, 255) var(--angle),
-    #282c34 0
-);
-   */
+  top: 80vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+}
+
+.btn-2 {
+  background-color: var(--bg);
+  height: 40px;
+  width: 120px;
+  border-radius: 30px;
+  color: var(--colour);
+  font-weight: 600;
+  font-size: large;
+  cursor: pointer;
+  transition: 200ms;
+}
+
+.btn-2:active {
+  background-color: #c1c1c1;
+}
+
+.top_right{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.description{
+  padding: 30px;
+  color: var(--colour);
+}

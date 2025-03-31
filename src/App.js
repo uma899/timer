@@ -1,100 +1,116 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Timer from "./timer";
 
 function App() {
-  const [isRunning, setIsRunning] = useState(false);
-  const [input, setInput] = useState(0);
-  const [time, setTime] = useState(0);
-  useEffect(() => {
-    let intervalId;
+  const [currentScreen, setCurrentScreen] = useState(<Timer />);
+  const [leftAnim, setLeftAnim] = useState(false);
+  const [theme, setTheme] = useState("App white");
 
-    if (isRunning && time > 0) {
-      intervalId = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (time === 0 && isRunning && input) {
-      audio.play();
-      setIsRunning(false)
-    }
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [isRunning, time]);
-
-  const handleStart = () => {
-    if(!time){
-      setTime(input);
-    }
-    setIsRunning(true);
-  };
-
-  const handlePause = () => {
-    setIsRunning(false);
-  };
-
-  const handleReset = () => {
-    setIsRunning(false);
-    setTime(0);
-  };
-
-  let audio = new Audio('audio.mp3')
-  const gradientStyle = {
-    backgroundImage: `conic-gradient(rgb(85, 0, 255) ${eval(time*360/input)}deg,#282c34 0 )`,
-    width: '160px',
-    height: '160px',
-    borderRadius: '50%', // To make it a circle
-    display: (time>0)?'grid':'none'
-  };
   return (
-    <div className="App">
-      <div className="timer">
-        <div className="counter" >
-          
-        <div className="time_container" style={gradientStyle} /* style={{ display: time > 0 && isRunning ? "block" : "none" }} */>
-        <div className="time" >
-        <h1>{time}</h1>
-        </div>
+    <div className={theme}>
+      <div className="main">
+        <div
+          className="screen"
+          style={leftAnim ? { transform: `translateX(-100%)` } : null}
+        >
+          {currentScreen}
         </div>
 
-          <div
-              className="input"
-              style={{ display: !isRunning && time === 0 ? "block" : "none" }}
-            >
-              Enter Time:
-              <input
-                type="number"
-                //value={time}
-                onChange={(e) => {
-                  //setTime(e);
-                  //setTime(e.target.value);
-                  setInput(e.target.value);
-                }}
-              ></input>
-            </div>
-
-        </div>
-        <div className="actions">
+        <div className="set_screen">
           <button
-            className="btn"
-            style={isRunning ? { backgroundColor: "#e25f14" } : null}
-            onClick={isRunning ? handlePause : handleStart}
+            className="btn-2"
+            style={
+              currentScreen.type === Timer
+                ? { backgroundColor: "rgba(162, 162, 162, 0.48)" }
+                : null
+            }
+            onClick={() => {
+              setLeftAnim(true);
+              setTimeout(() => {
+                setCurrentScreen(<Timer />);
+                setLeftAnim(false);
+              }, 310);
+            }}
+            disabled={currentScreen.type === Timer ? true : false}
           >
-            {isRunning ? (
-              <>Pause</>
-            ) : time > 0 && eval(time - input) ? (
-              <>Resume</>
-            ) : (
-              <>Start</>
-            )}
+            Timer
           </button>
-          <button className="btn" onClick={handleReset}>
-            Reset
+          <button
+            className="btn-2"
+            style={
+              currentScreen.type === Stopwatch
+                ? { backgroundColor: "rgba(162, 162, 162, 0.48)" }
+                : null
+            }
+            onClick={() => {
+              setLeftAnim(true);
+              setTimeout(() => {
+                setCurrentScreen(<Stopwatch />);
+                setLeftAnim(false);
+              }, 310);
+            }}
+            disabled={currentScreen.type === Stopwatch ? true : false}
+          >
+            Stopwatch
           </button>
         </div>
-      </div>
+        </div>
+        <div className="description">
+          <p>
+            Time is a fundamental and irreplaceable resource that impacts every
+            aspect of life, from personal goals to professional success, and its
+            importance lies in its ability to be used wisely to achieve outcomes
+            and live a fulfilling life. Here's a more detailed look at the
+            importance of time: Why Time is Valuable: Irreplaceable Resource:
+            Once time passes, it cannot be retrieved, making it a precious and
+            finite resource. Foundation for Goals and Dreams: Effective time
+            management is crucial for achieving personal and professional goals,
+            as it allows for focused effort and efficient task completion.
+            Impact on Mental Health: Poor time management can lead to stress and
+            anxiety, while effective time management can reduce these feelings
+            and promote a sense of control. Opportunity for Growth: Time allows
+            for learning, skill development, and personal growth, both
+            professionally and personally. Foundation for Relationships:
+            Respecting others' time and being punctual are important for
+            building strong relationships. Increased Productivity: Effective
+            time management leads to increased productivity and efficiency,
+            allowing individuals to accomplish more in less time. Improved
+            Decision-Making: Taking the time to consider options and make
+            thoughtful decisions can lead to better outcomes. Self-Discipline:
+            Managing time effectively can improve self-discipline and the
+            ability to prioritize tasks. Preventing Procrastination: Effective
+            time management can help prevent procrastination and ensure that
+            responsibilities are managed efficiently. Living with Purpose:
+            Recognizing the importance of time helps individuals live with
+            purpose and direction, ultimately leading to a more satisfying
+            existence
+          </p>
+        </div>
+      
+      <button
+        className="btn-2 top_right"
+        style={{ width: "200px" }}
+        onClick={() => {
+          if (theme === "App white") {
+            setTheme("App dark");
+          } else {
+            setTheme("App white");
+          }
+        }}
+      >
+        Change theme
+      </button>
     </div>
   );
 }
 
 export default App;
+
+function Stopwatch() {
+  return (
+    <div className="stopwatch">
+      <h1>Stopwatch</h1>
+    </div>
+  );
+}
